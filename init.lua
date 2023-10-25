@@ -1,5 +1,10 @@
 require("whichkey")
+require("copilot").setup(options)
 require("plugins")
+require("autoclose").setup()
+require("nvim-cmp")
+require("toggleterm-config")
+vim.cmd("colorscheme PaperColor")
 -- Mason Setup
 require("mason").setup({
     ui = {
@@ -11,10 +16,6 @@ require("mason").setup({
     }
 })
 require("mason-lspconfig").setup()
-require('monokai').setup {}
-require('monokai').setup { palette = require('monokai').pro }
-require('monokai').setup { palette = require('monokai').soda }
-require('monokai').setup { palette = require('monokai').ristretto }
 
 local rt = require("rust-tools")
 
@@ -57,7 +58,8 @@ vim.diagnostic.config({
 })
 
 vim.cmd([[
-set signcolumn=yes
+set signcolumn=no
+set relativenumber
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 ]])
 -- Completion Plugin Setup
@@ -137,7 +139,6 @@ vim.opt.termguicolors = true
 if vim.fn.has("termguicolors") then
   vim.opt.termguicolors = true
 end
-require("boo-colorscheme").use({})
-
+-- The setup config table shows all available config options with their default values:
 -- empty setup using defaults
 require("nvim-tree").setup()

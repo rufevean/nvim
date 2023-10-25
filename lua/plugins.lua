@@ -41,14 +41,19 @@ packer.init({
 -- Install your plugins here
 return packer.startup(function(use)
 	use ("wbthomason/packer.nvim") -- Have packer manage itself	
-	use 'williamboman/mason.nvim'    
+
+
+use 'williamboman/mason.nvim'    
     	use 'williamboman/mason-lspconfig.nvim'
  	use 'neovim/nvim-lspconfig' 
     	use 'simrat39/rust-tools.nvim'  
 	-- Completion framework:
     	use 'hrsh7th/nvim-cmp' 
-	use 'rockerBOO/boo-colorscheme-nvim'
+	use 'rockerBOO/boo-colorscheme-nvim'	
 	use 'puremourning/vimspector'
+	use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+  require("toggleterm").setup()
+end}
     	-- LSP completion source:
     	use 'hrsh7th/cmp-nvim-lsp'
 	    use {
@@ -60,7 +65,9 @@ use {
     "nvim-telescope/telescope-file-browser.nvim",
     requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
 }
+use 'm4xshen/autoclose.nvim'
     	-- Useful completion sources:
+	use 'andweeb/presence.nvim'
     	use 'hrsh7th/cmp-nvim-lua'
     	use 'hrsh7th/cmp-nvim-lsp-signature-help'
     	use 'hrsh7th/cmp-vsnip'                             
@@ -68,19 +75,20 @@ use {
     	use 'hrsh7th/cmp-buffer'                            
     	use 'hrsh7th/vim-vsnip' 
 	use 'tanvirtin/monokai.nvim'
-	use 'andweeb/presence.nvim'
-use 'github/copilot.vim'
+use { "zbirenbaum/copilot.lua" }
+-- snippets
+use "NLKNguyen/papercolor-theme"
+use("L3MON4D3/LuaSnip") -- snippet engine
+use("saadparwaiz1/cmp_luasnip") -- for autocompletion
+use("rafamadriz/friendly-snippets") -- useful snippets
 	-- Lua
 use {
   "folke/which-key.nvim"}
 	-- file explorer
 use("nvim-tree/nvim-tree.lua")
 
--- vs-code like icons
 use("nvim-tree/nvim-web-devicons")
-
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
 end)
-

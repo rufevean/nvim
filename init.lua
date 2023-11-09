@@ -1,10 +1,22 @@
 require("whichkey")
-require("copilot").setup(options)
 require("plugins")
 require("autoclose").setup()
+require("error-lens").setup(client, {
+    -- your options go here
+})
+require('tabnine').setup({
+  disable_auto_comment=true,
+  accept_keymap="<Alt-space>",
+  dismiss_keymap = "<C-]>",
+  debounce_ms = 800,
+  suggestion_color = {gui = "#808080", cterm = 244},
+  exclude_filetypes = {"TelescopePrompt", "NvimTree"},
+  log_file_path = nil, -- absolute path to Tabnine log file
+})
 require("nvim-cmp")
 require("toggleterm-config")
-vim.cmd("colorscheme PaperColor")
+require("telescope")
+require('git').setup()
 -- Mason Setup
 require("mason").setup({
     ui = {
@@ -15,7 +27,68 @@ require("mason").setup({
         },
     }
 })
+
+require('mini.starter').setup(
+-- No need to copy this inside `setup()`. Will be used automatically.
+{
+  -- Whether to open starter buffer on VimEnter. Not opened if Neovim was
+  -- started with intent to show something else.
+  autoopen = true,
+
+  -- Whether to evaluate action of single active item
+  evaluate_single = false,
+
+  -- Items to be displayed. Should be an array with the following elements:
+  -- - Item: table with <action>, <name>, and <section> keys.
+  -- - Function: should return one of these three categories.
+  -- - Array: elements of these three types (i.e. item, array, function).
+  -- If `nil` (default), default items will be used (see |mini.starter|).
+  items = nil,
+
+  -- Header to be displayed before items. Converted to single string via
+  -- `tostring` (use `\n` to display several lines). If function, it is
+  -- evaluated first. If `nil` (default), polite greeting will be used.
+  header = "i can bench your mom",
+
+  -- Footer to be displayed after items. Converted to single string via
+  -- `tostring` (use `\n` to display several lines). If function, it is
+  -- evaluated first. If `nil` (default), default usage help will be shown.
+  footer = "made with 1s and 0s by rufevean( with rizz towards your mom)",
+
+  -- Array  of functions to be applied consecutively to initial content.
+  -- Each function should take and return content for 'Starter' buffer (see
+  -- |mini.starter| and |MiniStarter.content| for more details).
+  content_hooks = nil,
+
+  -- Characters to update query. Each character will have special buffer
+  -- mapping overriding your global ones. Be careful to not add `:` as it
+  -- allows you to go into command mode.
+  query_updaters = 'abcdefghijklmnopqrstuvwxyz0123456789_-.',
+
+  -- Whether to disable showing non-error feedback
+  silent = false,
+}
+)
+-- Lua
+vim.cmd [[colorscheme mellow]]
+vim.cmd("set guifont=JetBrainsMono\\ Nerd\\ Font\\ Mono:h18")
 require("mason-lspconfig").setup()
+vim.cmd("set laststatus")
+vim.cmd("set number")
+vim.cmd("set background=dark")
+vim.cmd("set termguicolors")
+vim.cmd("set mouse=a")
+vim.cmd("set showmatch")
+vim.cmd("set list")
+vim.cmd("set autoindent")
+vim.cmd("set smartindent")
+vim.cmd("set tabstop=4")
+vim.cmd("set shiftwidth=4")
+vim.cmd("set expandtab")
+vim.cmd("set wrap")
+vim.cmd("set linebreak")
+vim.cmd("set breakindent")
+vim.cmd("set showbreak=↳")
 
 local rt = require("rust-tools")
 

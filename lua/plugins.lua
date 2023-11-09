@@ -41,8 +41,39 @@ packer.init({
 -- Install your plugins here
 return packer.startup(function(use)
 	use ("wbthomason/packer.nvim") -- Have packer manage itself	
+  use { 'codota/tabnine-nvim', run = "./dl_binaries.sh" }
 
+  use({
+  'Wansmer/treesj',
+  requires = { 'nvim-treesitter/nvim-treesitter' },
+  config = function()
+    require('treesj').setup({--[[ your config ]]})
+  end,
+})
+use {
+  'VonHeikemen/lsp-zero.nvim',
+  branch = 'v3.x',
+  requires = {
+    --- Uncomment these if you want to manage LSP servers from neovim
+    -- {'williamboman/mason.nvim'},
+    -- {'williamboman/mason-lspconfig.nvim'},
 
+    -- LSP Support
+    {'neovim/nvim-lspconfig'},
+    -- Autocompletion
+    {'hrsh7th/nvim-cmp'},
+    {'hrsh7th/cmp-nvim-lsp'},
+    {'L3MON4D3/LuaSnip'},
+  }
+}
+  use({
+    "stevearc/conform.nvim",
+    config = function()
+      require("conform").setup()
+    end,
+  })
+  use 'rcarriga/nvim-notify'
+use { 'echasnovski/mini.nvim', branch = 'stable' }
 use 'williamboman/mason.nvim'    
     	use 'williamboman/mason-lspconfig.nvim'
  	use 'neovim/nvim-lspconfig' 
@@ -50,10 +81,10 @@ use 'williamboman/mason.nvim'
 	-- Completion framework:
     	use 'hrsh7th/nvim-cmp' 
 	use 'rockerBOO/boo-colorscheme-nvim'	
-	use 'puremourning/vimspector'
 	use {"akinsho/toggleterm.nvim", tag = '*', config = function()
   require("toggleterm").setup()
 end}
+use 'kvrohit/mellow.nvim'
     	-- LSP completion source:
     	use 'hrsh7th/cmp-nvim-lsp'
 	    use {
@@ -61,10 +92,10 @@ end}
         run = ':TSUpdate'
     }
     use("nvim-lua/plenary.nvim") 
-use {
-    "nvim-telescope/telescope-file-browser.nvim",
-    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-}
+-- These optional plugins should be loaded directly because of a bug in Packer lazy loading
+use 'nvim-tree/nvim-web-devicons' -- OPTIONAL: for file icons
+use 'lewis6991/gitsigns.nvim' -- OPTIONAL: for git status
+
 use 'm4xshen/autoclose.nvim'
     	-- Useful completion sources:
 	use 'andweeb/presence.nvim'
@@ -75,7 +106,19 @@ use 'm4xshen/autoclose.nvim'
     	use 'hrsh7th/cmp-buffer'                            
     	use 'hrsh7th/vim-vsnip' 
 	use 'tanvirtin/monokai.nvim'
-use { "zbirenbaum/copilot.lua" }
+	use "rebelot/kanagawa.nvim"
+	use {'iamcco/markdown-preview.nvim'}
+    use 'ful1e5/onedark.nvim'
+use {
+    'chikko80/error-lens.nvim',
+    requires = {'nvim-telescope/telescope.nvim'}
+}
+use({ "typicode/bg.nvim" })
+	use {
+  'dinhhuy258/git.nvim'
+}
+	use {'neoclide/coc.nvim', branch = 'release'}
+
 -- snippets
 use "NLKNguyen/papercolor-theme"
 use("L3MON4D3/LuaSnip") -- snippet engine
@@ -86,6 +129,7 @@ use {
   "folke/which-key.nvim"}
 	-- file explorer
 use("nvim-tree/nvim-tree.lua")
+	use("nvim-telescope/telescope.nvim")
 
 use("nvim-tree/nvim-web-devicons")
 	if PACKER_BOOTSTRAP then

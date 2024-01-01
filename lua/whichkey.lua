@@ -207,6 +207,8 @@ local mappings = {
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
 	},
+    ["<Tab>"] = { "<cmd>lua require('telescope').extensions.fzf_commits{}<cr>", "GitHub Copilot" },
+
 }
 
 which_key.setup(setup)

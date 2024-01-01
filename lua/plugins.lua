@@ -59,6 +59,7 @@ return packer.startup(function(use)
 	use("hrsh7th/cmp-nvim-lsp") -- nvim-cmp source for neovim's built-in LSP
 	use("hrsh7th/nvim-cmp") -- Completion
 	use("neovim/nvim-lspconfig") -- LSP
+    use("github/copilot.vim")
 	use("jose-elias-alvarez/null-ls.nvim")
 	use({ "mhartington/formatter.nvim" })
 	use({ "numToStr/Comment.nvim", requires = {
@@ -85,21 +86,8 @@ return packer.startup(function(use)
 			vim.fn["mkdp#util#install"]()
 		end,
 	})
-    use {
-  "zbirenbaum/copilot.lua",
-  cmd = "Copilot",
-  event = "InsertEnter",
-  config = function()
-    require("copilot").setup({})
-  end,
-}
-use {
-  "zbirenbaum/copilot-cmp",
-  after = { "copilot.lua" },
-  config = function ()
-    require("copilot_cmp").setup()
-  end
-}
+
+
 	use("lewis6991/gitsigns.nvim")
 	use({
 		"VonHeikemen/lsp-zero.nvim",
@@ -131,7 +119,6 @@ use {
 	})
 	use({ "echasnovski/mini.nvim", branch = "stable" })
 	use("williamboman/mason-lspconfig.nvim")
-	use("simrat39/rust-tools.nvim")
 	-- Completion framework:
 	use("rockerBOO/boo-colorscheme-nvim")
 	use({

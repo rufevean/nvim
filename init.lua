@@ -3,6 +3,8 @@ require("plugins")
 require('gitsigns').setup()
 require("autoclose").setup()
 require("null-ls").get_sources()
+vim.opt.termguicolors = true
+require("bufferline").setup{}
 -- The setup config table shows all available config options with their default values:
 require("presence").setup({
     -- General options
@@ -38,6 +40,7 @@ require("conform").setup({
 		javascript = { { "prettierd", "prettier" } },
 	},
 })
+
 local null_ls = require("null-ls")
 
 local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
@@ -75,6 +78,52 @@ vim.cmd("map <Leader>ln :NullLsInfo<CR>")
 -- Author: shadmansaleh
 -- Credit: glepnir
 local lualine = require("lualine")
+-- adding a config for bufferline changing some styles , adding vertical lines in between buffers tabs and adding few keybindings 
+require("bufferline").setup{
+    options = {
+        -- view = "multiwindow" | "default",
+        view = "multiwindow",
+        -- numbers = "none" | "ordinal" | "buffer_id" | "both",
+        numbers = "ordinal",
+        -- number_style = "superscript" | "",
+        number_style = "",
+        -- mappings = true | false,
+        mappings = true,
+        buffer_close_icon = "*",
+        modified_icon = "",
+        close_icon = "",
+        left_trunc_marker = "|",
+        right_trunc_marker = "|",
+        -- max_name_length = 18,
+        max_name_length = 18,
+        -- max_prefix_length = 15, -- prefix used when a buffer is deduplicated
+        max_prefix_length = 15,
+        -- tab_size = 18,
+        tab_size = 10,
+        -- diagnostics = "nvim_lsp",
+        diagnostics = "nvim_lsp",
+        -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
+        --   return "("..count..")"
+        -- end,
+        diagnostics_indicator = function(count, level, diagnostics_dict, context)
+            return "(" .. count .. ")"
+        end,
+        -- custom_filter = function(buf_number)
+        --   -- filter out filetypes you don't want to see
+        --   if vim.bo[buf_number].filetype ~= "<i-dont-want-to-see-this>" then
+        --     return true
+        --   end
+        --   -- filter out by buffer name
+        --   if vim.fn.bufname(buf_number) ~= "<buffer-name-I-dont-want>" then
+        --     return true
+        --   end
+        --   -- filter out based on arbitrary rules
+        --   -- e.g. filter out vim wiki buffer from tabline in your work repo
+        --   if vim.fn.getcwd() == "<work-repo>" and vim.bo[buf_number].filetype ~= "wiki" then 
+        --     return True
+        
+    }
+}
 
 -- Color table for highlights
 -- stylua: ignore
@@ -367,11 +416,11 @@ vim.cmd([[
   au TextYankPost * silent! lua vim.highlight.on_yank({higroup="Visual", timeout=100})
   augroup END
 ]])
-vim.cmd([[colorscheme mellow]])
 vim.cmd("set guifont=Monospace:h20 ")
 require("mason-lspconfig").setup()
-vim.cmd("set laststatus=0")
+vim.cmd("set laststatus=2")
 vim.cmd("set number")
+vim.cmd("set noshowmode")
 vim.cmd("set background=dark")
 vim.cmd("set mouse=a")
 vim.cmd("set showmatch")
@@ -498,6 +547,7 @@ local prettier = {
 		),
 	},
 }
+vim.cmd([[colorscheme mountaineer]])
 local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

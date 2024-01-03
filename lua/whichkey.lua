@@ -208,7 +208,10 @@ local mappings = {
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
 	},
     ["<Tab>"] = { "<cmd>lua require('telescope').extensions.fzf_commits{}<cr>", "GitHub Copilot" },
-
+    -- adding keybindings for bufferline as alt plus a and alt puls d 
+    -- are not working on my machine
+    ["<A-S-a>"] = { "<cmd>BufferLineCycleNext<cr>", "Next Buffer" },
+    ["<A-S-d>"] = { "<cmd>BufferLineCyclePrev<cr>", "Prev Buffer" },
 }
 
 which_key.setup(setup)

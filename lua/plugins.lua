@@ -70,7 +70,7 @@ return packer.startup(function(use)
   use 'nvim-lua/completion-nvim'
   use 'psliwka/vim-smoothie'
   use 'terryma/vim-multiple-cursors'
-
+    use 'itchyny/lightline.vim'
 	use({
 		"stevearc/conform.nvim",
 		config = function()
@@ -86,7 +86,6 @@ return packer.startup(function(use)
 			vim.fn["mkdp#util#install"]()
 		end,
 	})
-
 
 	use("lewis6991/gitsigns.nvim")
 	use({
@@ -121,7 +120,8 @@ return packer.startup(function(use)
 	use("williamboman/mason-lspconfig.nvim")
 	-- Completion framework:
 	use("rockerBOO/boo-colorscheme-nvim")
-	use({
+	use("rafi/awesome-vim-colorschemes")
+    use({
 		"akinsho/toggleterm.nvim",
 		tag = "*",
 		config = function()
@@ -153,6 +153,7 @@ return packer.startup(function(use)
 		"chikko80/error-lens.nvim",
 		requires = { "nvim-telescope/telescope.nvim" },
 	})
+    use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
 	use({ "typicode/bg.nvim" })
 	use({
 		"dinhhuy258/git.nvim",

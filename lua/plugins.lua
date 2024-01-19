@@ -98,7 +98,8 @@ return packer.startup(function(use)
 
 			-- LSP Support
 			{ "neovim/nvim-lspconfig" },
-			use({
+            --- add python lsp 
+            use({
 				"nvim-lualine/lualine.nvim",
 				requires = { "nvim-tree/nvim-web-devicons", opt = true },
 			}),

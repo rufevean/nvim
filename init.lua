@@ -597,7 +597,7 @@ local prettier = {
 		),
 	},
 }
-vim.cmd([[colorscheme mountaineer]])
+vim.cmd([[colorscheme radioactive_waste]])
 local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

@@ -45,6 +45,7 @@ return packer.startup(function(use)
     use {
     "williamboman/mason.nvim"
 }
+
 	use({
 		"Wansmer/treesj",
 		requires = { "nvim-treesitter/nvim-treesitter" },
@@ -53,7 +54,6 @@ return packer.startup(function(use)
 			})
 		end,
 	})
-	use("feline-nvim/feline.nvim")
 	use("onsails/lspkind-nvim") -- vscode-like pictograms
 	use("hrsh7th/cmp-buffer") -- nvim-cmp source for buffer words
 	use("hrsh7th/cmp-nvim-lsp") -- nvim-cmp source for neovim's built-in LSP
@@ -67,9 +67,11 @@ return packer.startup(function(use)
 	} })
       use 'jwalton512/vim-blade'
   use 'alvan/vim-closetag'
+  use("lewis6991/gitsigns.nvim")
+  use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
+
   use 'nvim-lua/completion-nvim'
   use 'psliwka/vim-smoothie'
-  use 'terryma/vim-multiple-cursors'
     use 'itchyny/lightline.vim'
 	use({
 		"stevearc/conform.nvim",
@@ -88,6 +90,8 @@ return packer.startup(function(use)
 	})
 
 	use("lewis6991/gitsigns.nvim")
+    use('nvim-telescope/telescope-symbols.nvim')
+use("onsails/lspkind-nvim")
 	use({
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
@@ -154,7 +158,6 @@ return packer.startup(function(use)
 		"chikko80/error-lens.nvim",
 		requires = { "nvim-telescope/telescope.nvim" },
 	})
-    use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
 	use({ "typicode/bg.nvim" })
 	use({
 		"dinhhuy258/git.nvim",

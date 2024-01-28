@@ -4,7 +4,100 @@ require('gitsigns').setup()
 require("autoclose").setup()
 require("null-ls").get_sources()
 vim.opt.termguicolors = true
+require('gitsigns').setup {
+  signs = {
+    add          = { text = '│' },
+    change       = { text = '│' },
+    delete       = { text = '_' },
+    topdelete    = { text = '‾' },
+    changedelete = { text = '~' },
+    untracked    = { text = '┆' },
+  },
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  watch_gitdir = {
+    follow_files = true
+  },
+  auto_attach = true,
+  attach_to_untracked = false,
+  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+    virt_text_priority = 100,
+  },
+  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+  sign_priority = 6,
+  update_debounce = 100,
+  status_formatter = nil, -- Use default
+  max_file_length = 40000, -- Disable if file is longer than this (in lines)
+  preview_config = {
+    -- Options passed to nvim_open_win
+    border = 'single',
+    style = 'minimal',
+    relative = 'cursor',
+    row = 0,
+    col = 1
+  },
+  yadm = {
+    enable = false
+  },
+}
 require("bufferline").setup{}
+require('lspkind').init({
+    -- DEPRECATED (use mode instead): enables text annotations
+    --
+    -- default: true
+    -- with_text = true,
+
+    -- defines how annotations are shown
+    -- default: symbol
+    -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
+    mode = 'symbol_text',
+
+    -- default symbol map
+    -- can be either 'default' (requires nerd-fonts font) or
+    -- 'codicons' for codicon preset (requires vscode-codicons font)
+    --
+    -- default: 'default'
+    preset = 'codicons',
+
+    -- override preset symbols
+    --
+    -- default: {}
+    symbol_map = {
+      Text = "󰉿",
+      Method = "󰆧",
+      Function = "󰊕",
+      Constructor = "",
+      Field = "󰜢",
+      Variable = "󰀫",
+      Class = "󰠱",
+      Interface = "",
+      Module = "",
+      Property = "󰜢",
+      Unit = "󰑭",
+      Value = "󰎠",
+      Enum = "",
+      Keyword = "󰌋",
+      Snippet = "",
+      Color = "󰏘",
+      File = "󰈙",
+      Reference = "󰈇",
+      Folder = "󰉋",
+      EnumMember = "",
+      Constant = "󰏿",
+      Struct = "󰙅",
+      Event = "",
+      Operator = "󰆕",
+      TypeParameter = "",
+    },
+})
+vim.cmd('set guifont=JetBrains\\ Mono:h10')  -- Adjust the font size as needed
 -- The setup config table shows all available config options with their default values:
 require("presence").setup({
     -- General options
@@ -129,51 +222,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 local lualine = require("lualine")
 -- adding a config for bufferline changing some styles , adding vertical lines in between buffers tabs and adding few keybindings 
-require("bufferline").setup{
-    options = {
-        -- view = "multiwindow" | "default",
-        view = "multiwindow",
-        -- numbers = "none" | "ordinal" | "buffer_id" | "both",
-        numbers = "ordinal",
-        -- number_style = "superscript" | "",
-        number_style = "",
-        -- mappings = true | false,
-        mappings = true,
-        buffer_close_icon = "*",
-        modified_icon = "",
-        close_icon = "",
-        left_trunc_marker = "|",
-        right_trunc_marker = "|",
-        -- max_name_length = 18,
-        max_name_length = 18,
-        -- max_prefix_length = 15, -- prefix used when a buffer is deduplicated
-        max_prefix_length = 15,
-        -- tab_size = 18,
-        tab_size = 10,
-        -- diagnostics = "nvim_lsp",
-        diagnostics = "nvim_lsp",
-        -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
-        --   return "("..count..")"
-        -- end,
-        diagnostics_indicator = function(count, level, diagnostics_dict, context)
-            return "(" .. count .. ")"
-        end,
-        -- custom_filter = function(buf_number)
-        --   -- filter out filetypes you don't want to see
-        --   if vim.bo[buf_number].filetype ~= "<i-dont-want-to-see-this>" then
-        --     return true
-        --   end
-        --   -- filter out by buffer name
-        --   if vim.fn.bufname(buf_number) ~= "<buffer-name-I-dont-want>" then
-        --     return true
-        --   end
-        --   -- filter out based on arbitrary rules
-        --   -- e.g. filter out vim wiki buffer from tabline in your work repo
-        --   if vim.fn.getcwd() == "<work-repo>" and vim.bo[buf_number].filetype ~= "wiki" then 
-        --     return True
-        
-    }
-}
 
 -- Color table for highlights
 -- stylua: ignore
@@ -597,7 +645,7 @@ local prettier = {
 		),
 	},
 }
-vim.cmd([[colorscheme radioactive_waste]])
+vim.cmd([[colorscheme gruvbox ]])
 local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

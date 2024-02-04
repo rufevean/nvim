@@ -61,18 +61,17 @@ return packer.startup(function(use)
 	use("neovim/nvim-lspconfig") -- LSP
     use("github/copilot.vim")
 	use("jose-elias-alvarez/null-ls.nvim")
-	use({ "mhartington/formatter.nvim" })
+	use({ "mhartington/formatter.nvim" })use 'feline-nvim/feline.nvim'
 	use({ "numToStr/Comment.nvim", requires = {
 		"JoosepAlviste/nvim-ts-context-commentstring",
 	} })
       use 'jwalton512/vim-blade'
   use 'alvan/vim-closetag'
   use("lewis6991/gitsigns.nvim")
-  use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
+  use('ziglang/zig.vim')
 
   use 'nvim-lua/completion-nvim'
   use 'psliwka/vim-smoothie'
-    use 'itchyny/lightline.vim'
 	use({
 		"stevearc/conform.nvim",
 		config = function()
@@ -121,8 +120,8 @@ use("onsails/lspkind-nvim")
 	use({
 		"williamboman/mason.nvim",
 	})
-	use({ "echasnovski/mini.nvim", branch = "stable" })
 	use("williamboman/mason-lspconfig.nvim")
+    use { 'echasnovski/mini.nvim', branch = 'stable'}
 	-- Completion framework:
 	use("rockerBOO/boo-colorscheme-nvim")
 	use("rafi/awesome-vim-colorschemes")

@@ -54,6 +54,14 @@ return packer.startup(function(use)
 			})
 		end,
 	})
+-- If you are using Packer
+use 'shaunsingh/nord.nvim'
+use {
+  'nvim-lualine/lualine.nvim',
+  requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+}
+
+use 'tamton-aquib/staline.nvim'
 	use("onsails/lspkind-nvim") -- vscode-like pictograms
 	use("hrsh7th/cmp-buffer") -- nvim-cmp source for buffer words
 	use("hrsh7th/cmp-nvim-lsp") -- nvim-cmp source for neovim's built-in LSP
@@ -124,6 +132,7 @@ use("onsails/lspkind-nvim")
     use { 'echasnovski/mini.nvim', branch = 'stable'}
 	-- Completion framework:
 	use("rockerBOO/boo-colorscheme-nvim")
+use 'toppair/reach.nvim'
 	use("rafi/awesome-vim-colorschemes")
     use({
 		"akinsho/toggleterm.nvim",

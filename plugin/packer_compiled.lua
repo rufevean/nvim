@@ -245,6 +245,11 @@ _G.packer_plugins = {
     path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/monokai.nvim",
     url = "https://github.com/tanvirtin/monokai.nvim"
   },
+  ["nord.nvim"] = {
+    loaded = true,
+    path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/nord.nvim",
+    url = "https://github.com/shaunsingh/nord.nvim"
+  },
   ["null-ls.nvim"] = {
     loaded = true,
     path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
@@ -314,6 +319,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/presence.nvim",
     url = "https://github.com/andweeb/presence.nvim"
+  },
+  ["reach.nvim"] = {
+    loaded = true,
+    path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/reach.nvim",
+    url = "https://github.com/toppair/reach.nvim"
+  },
+  ["staline.nvim"] = {
+    loaded = true,
+    path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/staline.nvim",
+    url = "https://github.com/tamton-aquib/staline.nvim"
   },
   ["telescope-symbols.nvim"] = {
     loaded = true,

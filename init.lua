@@ -10,6 +10,46 @@ if not line_ok then
 	return
 end
 
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'nord',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
 local one_monokai = {
 	fg = "#abb2bf",
 	bg = "#1e2024",
@@ -24,6 +64,10 @@ local one_monokai = {
 	dark_red = "#f75f5f",
 }
 
+
+require('reach').setup({
+  notifications = true
+})
 local vi_mode_colors = {
 	NORMAL = "green",
 	OP = "green",
@@ -233,11 +277,12 @@ local components = {
 	},
 }
 
-feline.setup({
-	components = components,
-	theme = one_monokai,
-	vi_mode_colors = vi_mode_colors,
-})
+-- Feline statusline definition.
+--
+-- Note: This statusline does not define any colors. Instead the statusline is
+-- built on custom highlight groups that I define. The colors for these
+-- highlight groups are pulled from the current colorscheme applied. Check the
+-- file: `lua/eden/modules/ui/colors.lua` to see how they are defined.
 require('gitsigns').setup {
   signs = {
     add          = { text = '│' },
@@ -484,190 +529,6 @@ local conditions = {
 		return gitdir and #gitdir > 0 and #gitdir < #filepath
 	end,
 }
-
--- Config
-local config = {
-	options = {
-		-- Disable sections and component separators
-		component_separators = "",
-		section_separators = "",
-		theme = {
-			-- We are going to use lualine_c an lualine_x as left and
-			-- right section. Both are highlighted by c theme .  So we
-			-- are just setting default looks o statusline
-			normal = { c = { fg = colors.fg, bg = colors.bg } },
-			inactive = { c = { fg = colors.fg, bg = colors.bg } },
-		},
-	},
-	sections = {
-		-- these are to remove the defaults
-		lualine_a = {},
-		lualine_b = {},
-		lualine_y = {},
-		lualine_z = {},
-		-- These will be filled later
-		lualine_c = {},
-		lualine_x = {},
-	},
-	inactive_sections = {
-		-- these are to remove the defaults
-		lualine_a = {},
-		lualine_b = {},
-		lualine_y = {},
-		lualine_z = {},
-		lualine_c = {},
-		lualine_x = {},
-	},
-}
--- Inserts a component in lualine_c at left section
-local function ins_left(component)
-	table.insert(config.sections.lualine_c, component)
-end
-
--- Inserts a component in lualine_x at right section
-local function ins_right(component)
-	table.insert(config.sections.lualine_x, component)
-end
-
-ins_left({
-	function()
-		return "▊"
-	end,
-	color = { fg = colors.blue }, -- Sets highlighting of component
-	padding = { left = 0, right = 1 }, -- We don't need space before this
-})
-
-ins_left({
-	-- mode component
-	function()
-		return ""
-	end,
-	color = function()
-		-- auto change color according to neovims mode
-		local mode_color = {
-			n = colors.red,
-			i = colors.green,
-			v = colors.blue,
-			[""] = colors.blue,
-			V = colors.blue,
-			c = colors.magenta,
-			no = colors.red,
-			s = colors.orange,
-			S = colors.orange,
-			[""] = colors.orange,
-			ic = colors.yellow,
-			R = colors.violet,
-			Rv = colors.violet,
-			cv = colors.red,
-			ce = colors.red,
-			r = colors.cyan,
-			rm = colors.cyan,
-			["r?"] = colors.cyan,
-			["!"] = colors.red,
-			t = colors.red,
-		}
-		return { fg = mode_color[vim.fn.mode()] }
-	end,
-	padding = { right = 1 },
-})
-
-ins_left({
-	-- filesize component
-	"filesize",
-	cond = conditions.buffer_not_empty,
-})
-
-ins_left({
-	"filename",
-	cond = conditions.buffer_not_empty,
-	color = { fg = colors.magenta, gui = "bold" },
-})
-
-ins_left({ "location" })
-
-ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
-
-ins_left({
-	"diagnostics",
-	sources = { "nvim_diagnostic" },
-	symbols = { error = " ", warn = " ", info = " " },
-	diagnostics_color = {
-		color_error = { fg = colors.red },
-		color_warn = { fg = colors.yellow },
-		color_info = { fg = colors.cyan },
-	},
-})
-
--- Insert mid section. You can make any number of sections in neovim :)
--- for lualine it's any number greater then 2
-ins_left({
-	function()
-		return "%="
-	end,
-})
-
-ins_left({
-	-- Lsp server name .
-	function()
-		local msg = "No Active Lsp"
-		local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-		local clients = vim.lsp.get_active_clients()
-		if next(clients) == nil then
-			return msg
-		end
-		for _, client in ipairs(clients) do
-			local filetypes = client.config.filetypes
-			if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-				return client.name
-			end
-		end
-		return msg
-	end,
-	icon = " LSP:",
-	color = { fg = "#ffffff", gui = "bold" },
-})
-
--- Add components to right sections
-ins_right({
-	"o:encoding", -- option component same as &encoding in viml
-	fmt = string.upper, -- I'm not sure why it's upper case either ;)
-	cond = conditions.hide_in_width,
-	color = { fg = colors.green, gui = "bold" },
-})
-
-ins_right({
-	"fileformat",
-	fmt = string.upper,
-	icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-	color = { fg = colors.green, gui = "bold" },
-})
-
-ins_right({
-	"branch",
-	icon = "",
-	color = { fg = colors.violet, gui = "bold" },
-})
-
-ins_right({
-	"diff",
-	-- Is it me or the symbol for modified us really weird
-	symbols = { added = " ", modified = "󰝤 ", removed = " " },
-	diff_color = {
-		added = { fg = colors.green },
-		modified = { fg = colors.orange },
-		removed = { fg = colors.red },
-	},
-	cond = conditions.hide_in_width,
-})
-
-ins_right({
-	function()
-		return "▊"
-	end,
-	color = { fg = colors.blue },
-	padding = { left = 1 },
-})
-
 -- Now don't forget to initialize lualine
 
 require("error-lens").setup(client, {
@@ -689,47 +550,32 @@ require("mason").setup({
 	},
 })
 vim.o.clipboard = "unnamedplus"
+
+
+
+
+-- ANSI escape sequences for text coloring
+local colors = {
+    reset = "\27[0m",
+    green = "\27[32m",
+    yellow = "\27[33m",
+}
+
+-- Define your header and footer with colors
+
 require("mini.starter").setup(
-	-- No need to copy this inside `setup()`. Will be used automatically.
-	{
-		-- Whether to open starter buffer on VimEnter. Not opened if Neovim was
-		-- started with intent to show something else.
-		autoopen = true,
-
-		-- Whether to evaluate action of single active item
-		evaluate_single = false,
-
-		-- Items to be displayed. Should be an array with the following elements:
-		-- - Item: table with <action>, <name>, and <section> keys.
-		-- - Function: should return one of these three categories.
-		-- - Array: elements of these three types (i.e. item, array, function).
-		-- If `nil` (default), default items will be used (see |mini.starter|).
-		items = nil,
-
-		-- Header to be displayed before items. Converted to single string via
-		-- `tostring` (use `\n` to display several lines). If function, it is
-		-- evaluated first. If `nil` (default), polite greeting will be used.
-		header = "i can bench your mom",
-
-		-- Footer to be displayed after items. Converted to single string via
-		-- `tostring` (use `\n` to display several lines). If function, it is
-		-- evaluated first. If `nil` (default), default usage help will be shown.
-		footer = "made with 1s and 0s by rufevean( with rizz towards your mom)",
-
-		-- Array  of functions to be applied consecutively to initial content.
-		-- Each function should take and return content for 'Starter' buffer (see
-		-- |mini.starter| and |MiniStarter.content| for more details).
-		content_hooks = nil,
-
-		-- Characters to update query. Each character will have special buffer
-		-- mapping overriding your global ones. Be careful to not add `:` as it
-		-- allows you to go into command mode.
-		query_updaters = "abcdefghijklmnopqrstuvwxyz0123456789_-.",
-
-		-- Whether to disable showing non-error feedback
-		silent = false,
-	}
+    {
+        autoopen = true,
+        evaluate_single = false,
+        header = "Perpendicular lines are parallel in the 3D world.",
+        footer = "I Still Think I am the Greatest -  Ye West",
+        content_hooks = nil,
+        query_updaters = "abcdefghijklmnopqrstuvwxyz0123456789_-.",
+        silent = false,
+    }
 )
+
+
 -- Lua
 vim.opt.cursorline = true
 vim.opt.termguicolors = true
@@ -747,7 +593,6 @@ vim.cmd([[
 ]])
 vim.cmd("set guifont=Monospace:h20 ")
 require("mason-lspconfig").setup()
-    vim.cmd("set laststatus=2")
 vim.cmd("set number")
 vim.cmd("set noshowmode")
 vim.cmd("set background=dark")
@@ -876,7 +721,7 @@ local prettier = {
 		),
 	},
 }
-vim.cmd([[colorscheme minimalist ]])
+vim.cmd([[colorscheme nord]])
 local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

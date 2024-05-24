@@ -45,7 +45,6 @@ return packer.startup(function(use)
     use {
     "williamboman/mason.nvim"
 }
-
 	use({
 		"Wansmer/treesj",
 		requires = { "nvim-treesitter/nvim-treesitter" },
@@ -60,7 +59,12 @@ use {
   'nvim-lualine/lualine.nvim',
   requires = { 'nvim-tree/nvim-web-devicons', opt = true }
 }
-
+use{
+  "folke/tokyonight.nvim",
+  lazy = false,
+  priority = 1000,
+  opts = {},
+}
 use 'tamton-aquib/staline.nvim'
 	use("onsails/lspkind-nvim") -- vscode-like pictograms
 	use("hrsh7th/cmp-buffer") -- nvim-cmp source for buffer words
@@ -77,6 +81,7 @@ use 'tamton-aquib/staline.nvim'
   use 'alvan/vim-closetag'
   use("lewis6991/gitsigns.nvim")
   use('ziglang/zig.vim')
+    use('tris203/precognition.nvim')
 
   use 'nvim-lua/completion-nvim'
   use 'psliwka/vim-smoothie'
@@ -166,7 +171,6 @@ use 'toppair/reach.nvim'
 		"chikko80/error-lens.nvim",
 		requires = { "nvim-telescope/telescope.nvim" },
 	})
-	use({ "typicode/bg.nvim" })
 	use({
 		"dinhhuy258/git.nvim",
 	})

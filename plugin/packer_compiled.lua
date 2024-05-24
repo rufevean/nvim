@@ -94,11 +94,6 @@ _G.packer_plugins = {
     path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/awesome-vim-colorschemes",
     url = "https://github.com/rafi/awesome-vim-colorschemes"
   },
-  ["bg.nvim"] = {
-    loaded = true,
-    path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/bg.nvim",
-    url = "https://github.com/typicode/bg.nvim"
-  },
   ["boo-colorscheme-nvim"] = {
     loaded = true,
     path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/boo-colorscheme-nvim",
@@ -315,6 +310,11 @@ _G.packer_plugins = {
     path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["precognition.nvim"] = {
+    loaded = true,
+    path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/precognition.nvim",
+    url = "https://github.com/tris203/precognition.nvim"
+  },
   ["presence.nvim"] = {
     loaded = true,
     path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/presence.nvim",
@@ -345,6 +345,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
+  },
+  ["tokyonight.nvim"] = {
+    loaded = true,
+    path = "/home/rufevean/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
+    url = "https://github.com/folke/tokyonight.nvim"
   },
   treesj = {
     config = { "\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vtreesj\frequire\0" },
@@ -390,6 +395,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: conform.nvim
+time([[Config for conform.nvim]], true)
+try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fconform\frequire\0", "config", "conform.nvim")
+time([[Config for conform.nvim]], false)
 -- Config for: treesj
 time([[Config for treesj]], true)
 try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vtreesj\frequire\0", "config", "treesj")
@@ -398,10 +407,6 @@ time([[Config for treesj]], false)
 time([[Config for toggleterm.nvim]], true)
 try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\15toggleterm\frequire\0", "config", "toggleterm.nvim")
 time([[Config for toggleterm.nvim]], false)
--- Config for: conform.nvim
-time([[Config for conform.nvim]], true)
-try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fconform\frequire\0", "config", "conform.nvim")
-time([[Config for conform.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

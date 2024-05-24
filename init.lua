@@ -1,315 +1,317 @@
-require("whichkey")
-require("plugins")
-require('gitsigns').setup()
-require("autoclose").setup()
-require("null-ls").get_sources()
+    require("whichkey")
+    require("plugins")
+    require('gitsigns').setup()
+    require("autoclose").setup()
+    require("null-ls").get_sources()
 
-vim.opt.termguicolors = true
-local line_ok, feline = pcall(require, "feline")
-if not line_ok then
-	return
-end
+    vim.opt.termguicolors = true
+    local line_ok, feline = pcall(require, "feline")
+    if not line_ok then
+        return
+    end
 
-require('lualine').setup {
-  options = {
-    icons_enabled = true,
-    theme = 'nord',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {
-      statusline = {},
+    require('lualine').setup {
+      options = {
+        icons_enabled = true,
+        theme = 'coal',
+        component_separators = { left = '', right = ''},
+        section_separators = { left = '', right = ''},
+        disabled_filetypes = {
+          statusline = {},
+          winbar = {},
+        },
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = false,
+        refresh = {
+          statusline = 1000,
+          tabline = 1000,
+          winbar = 1000,
+        }
+      },
+      sections = {
+        lualine_a = {'mode'},
+        lualine_b = {'branch', 'diff', 'diagnostics'},
+        lualine_c = {'filename'},
+        lualine_x = {'encoding', 'fileformat', 'filetype'},
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {'filename'},
+        lualine_x = {'location'},
+        lualine_y = {},
+        lualine_z = {}
+      },
+      tabline = {},
       winbar = {},
-    },
-    ignore_focus = {},
-    always_divide_middle = true,
-    globalstatus = false,
-    refresh = {
-      statusline = 1000,
-      tabline = 1000,
-      winbar = 1000,
+      inactive_winbar = {},
+      extensions = {}
     }
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  winbar = {},
-  inactive_winbar = {},
-  extensions = {}
-}
-local one_monokai = {
-	fg = "#abb2bf",
-	bg = "#1e2024",
-	green = "#98c379",
-	yellow = "#e5c07b",
-	purple = "#c678dd",
-	orange = "#d19a66",
-	peanut = "#f6d5a4",
-	red = "#e06c75",
-	aqua = "#61afef",
-	darkblue = "#282c34",
-	dark_red = "#f75f5f",
-}
+    local one_monokai = {
+        fg = "#abb2bf",
+        bg = "#1e2024",
+        green = "#98c379",
+        yellow = "#e5c07b",
+        purple = "#c678dd",
+        orange = "#d19a66",
+        peanut = "#f6d5a4",
+        red = "#e06c75",
+        aqua = "#61afef",
+        darkblue = "#282c34",
+        dark_red = "#f75f5f",
+    }
 
 
-require('reach').setup({
-  notifications = true
-})
-local vi_mode_colors = {
-	NORMAL = "green",
-	OP = "green",
-	INSERT = "yellow",
-	VISUAL = "purple",
-	LINES = "orange",
-	BLOCK = "dark_red",
-	REPLACE = "red",
-	COMMAND = "aqua",
-}
+    require('reach').setup({
+      notifications = true
+    })
+    local vi_mode_colors = {
+        NORMAL = "green",
+        OP = "green",
+        INSERT = "yellow",
+        VISUAL = "purple",
+        LINES = "orange",
+        BLOCK = "dark_red",
+        REPLACE = "red",
+        COMMAND = "aqua",
+    }
+    require('precognition').setup({
 
-local c = {
-	vim_mode = {
-		provider = {
-			name = "vi_mode",
-			opts = {
-				show_mode_name = true,
-				-- padding = "center", -- Uncomment for extra padding.
-			},
-		},
-		hl = function()
-			return {
-				fg = require("feline.providers.vi_mode").get_mode_color(),
-				bg = "darkblue",
-				style = "bold",
-				name = "NeovimModeHLColor",
-			}
-		end,
-		left_sep = "block",
-		right_sep = "block",
-	},
-	gitBranch = {
-		provider = "git_branch",
-		hl = {
-			fg = "peanut",
-			bg = "darkblue",
-			style = "bold",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-	gitDiffAdded = {
-		provider = "git_diff_added",
-		hl = {
-			fg = "green",
-			bg = "darkblue",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-	gitDiffRemoved = {
-		provider = "git_diff_removed",
-		hl = {
-			fg = "red",
-			bg = "darkblue",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-	gitDiffChanged = {
-		provider = "git_diff_changed",
-		hl = {
-			fg = "fg",
-			bg = "darkblue",
-		},
-		left_sep = "block",
-		right_sep = "right_filled",
-	},
-	separator = {
-		provider = "",
-	},
-	fileinfo = {
-		provider = {
-			name = "file_info",
-			opts = {
-				type = "relative-short",
-			},
-		},
-		hl = {
-			style = "bold",
-		},
-		left_sep = " ",
-		right_sep = " ",
-	},
-	diagnostic_errors = {
-		provider = "diagnostic_errors",
-		hl = {
-			fg = "red",
-		},
-	},
-	diagnostic_warnings = {
-		provider = "diagnostic_warnings",
-		hl = {
-			fg = "yellow",
-		},
-	},
-	diagnostic_hints = {
-		provider = "diagnostic_hints",
-		hl = {
-			fg = "aqua",
-		},
-	},
-	diagnostic_info = {
-		provider = "diagnostic_info",
-	},
-	lsp_client_names = {
-		provider = "lsp_client_names",
-		hl = {
-			fg = "purple",
-			bg = "darkblue",
-			style = "bold",
-		},
-		left_sep = "left_filled",
-		right_sep = "block",
-	},
-	file_type = {
-		provider = {
-			name = "file_type",
-			opts = {
-				filetype_icon = true,
-				case = "titlecase",
-			},
-		},
-		hl = {
-			fg = "red",
-			bg = "darkblue",
-			style = "bold",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-	file_encoding = {
-		provider = "file_encoding",
-		hl = {
-			fg = "orange",
-			bg = "darkblue",
-			style = "italic",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-	position = {
-		provider = "position",
-		hl = {
-			fg = "green",
-			bg = "darkblue",
-			style = "bold",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-	line_percentage = {
-		provider = "line_percentage",
-		hl = {
-			fg = "aqua",
-			bg = "darkblue",
-			style = "bold",
-		},
-		left_sep = "block",
-		right_sep = "block",
-	},
-	scroll_bar = {
-		provider = "scroll_bar",
-		hl = {
-			fg = "yellow",
-			style = "bold",
-		},
-	},
-}
+    })
+    local c = {
+        vim_mode = {
+            provider = {
+                name = "vi_mode",
+                opts = {
+                    show_mode_name = true,
+                    -- padding = "center", -- Uncomment for extra padding.
+                },
+            },
+            hl = function()
+                return {
+                    fg = require("feline.providers.vi_mode").get_mode_color(),
+                    bg = "darkblue",
+                    style = "bold",
+                    name = "NeovimModeHLColor",
+                }
+            end,
+            left_sep = "block",
+            right_sep = "block",
+        },
+        gitBranch = {
+            provider = "git_branch",
+            hl = {
+                fg = "peanut",
+                bg = "darkblue",
+                style = "bold",
+            },
+            left_sep = "block",
+            right_sep = "block",
+        },
+        gitDiffAdded = {
+            provider = "git_diff_added",
+            hl = {
+                fg = "green",
+                bg = "darkblue",
+            },
+            left_sep = "block",
+            right_sep = "block",
+        },
+        gitDiffRemoved = {
+            provider = "git_diff_removed",
+            hl = {
+                fg = "red",
+                bg = "darkblue",
+            },
+            left_sep = "block",
+            right_sep = "block",
+        },
+        gitDiffChanged = {
+            provider = "git_diff_changed",
+            hl = {
+                fg = "fg",
+                bg = "darkblue",
+            },
+            left_sep = "block",
+            right_sep = "right_filled",
+        },
+        separator = {
+            provider = "",
+        },
+        fileinfo = {
+            provider = {
+                name = "file_info",
+                opts = {
+                    type = "relative-short",
+                },
+            },
+            hl = {
+                style = "bold",
+            },
+            left_sep = " ",
+            right_sep = " ",
+        },
+        diagnostic_errors = {
+            provider = "diagnostic_errors",
+            hl = {
+                fg = "red",
+            },
+        },
+        diagnostic_warnings = {
+            provider = "diagnostic_warnings",
+            hl = {
+                fg = "yellow",
+            },
+        },
+        diagnostic_hints = {
+            provider = "diagnostic_hints",
+            hl = {
+                fg = "aqua",
+            },
+        },
+        diagnostic_info = {
+            provider = "diagnostic_info",
+        },
+        lsp_client_names = {
+            provider = "lsp_client_names",
+            hl = {
+                fg = "purple",
+                bg = "darkblue",
+                style = "bold",
+            },
+            left_sep = "left_filled",
+            right_sep = "block",
+        },
+        file_type = {
+            provider = {
+                name = "file_type",
+                opts = {
+                    filetype_icon = true,
+                    case = "titlecase",
+                },
+            },
+            hl = {
+                fg = "red",
+                bg = "darkblue",
+                style = "bold",
+            },
+            left_sep = "block",
+            right_sep = "block",
+        },
+        file_encoding = {
+            provider = "file_encoding",
+            hl = {
+                fg = "orange",
+                bg = "darkblue",
+                style = "italic",
+            },
+            left_sep = "block",
+            right_sep = "block",
+        },
+        position = {
+            provider = "position",
+            hl = {
+                fg = "green",
+                bg = "darkblue",
+                style = "bold",
+            },
+            left_sep = "block",
+            right_sep = "block",
+        },
+        line_percentage = {
+            provider = "line_percentage",
+            hl = {
+                fg = "aqua",
+                bg = "darkblue",
+                style = "bold",
+            },
+            left_sep = "block",
+            right_sep = "block",
+        },
+        scroll_bar = {
+            provider = "scroll_bar",
+            hl = {
+                fg = "yellow",
+                style = "bold",
+            },
+        },
+    }
 
-local left = {
-	c.vim_mode,
-	c.gitBranch,
-	c.gitDiffAdded,
-  c.gitDiffRemoved,
-	c.gitDiffChanged,
-	c.separator,
-}
+    local left = {
+        c.vim_mode,
+        c.gitBranch,
+        c.gitDiffAdded,
+      c.gitDiffRemoved,
+        c.gitDiffChanged,
+        c.separator,
+    }
 
-local middle = {
-	c.fileinfo,
-	c.diagnostic_errors,
-	c.diagnostic_warnings,
-	c.diagnostic_info,
-	c.diagnostic_hints,
-}
+    local middle = {
+        c.fileinfo,
+        c.diagnostic_errors,
+        c.diagnostic_warnings,
+        c.diagnostic_info,
+        c.diagnostic_hints,
+    }
 
-local right = {
-	c.lsp_client_names,
-	c.file_type,
-	c.file_encoding,
-	c.position,
-	c.line_percentage,
-	c.scroll_bar,
-}
+    local right = {
+        c.lsp_client_names,
+        c.file_type,
+        c.file_encoding,
+        c.position,
+        c.line_percentage,
+        c.scroll_bar,
+    }
 
-local components = {
-	active = {
-		left,
-		middle,
-		right,
-	},
-	inactive = {
-		left,
-		middle,
-		right,
-	},
-}
+    local components = {
+        active = {
+            left,
+            middle,
+            right,
+        },
+        inactive = {
+            left,
+            middle,
+            right,
+        },
+    }
 
--- Feline statusline definition.
---
--- Note: This statusline does not define any colors. Instead the statusline is
--- built on custom highlight groups that I define. The colors for these
--- highlight groups are pulled from the current colorscheme applied. Check the
--- file: `lua/eden/modules/ui/colors.lua` to see how they are defined.
-require('gitsigns').setup {
-  signs = {
-    add          = { text = '│' },
-    change       = { text = '│' },
-    delete       = { text = '_' },
-    topdelete    = { text = '‾' },
-    changedelete = { text = '~' },
-    untracked    = { text = '┆' },
-  },
-  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
-  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
-  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
-  watch_gitdir = {
-    follow_files = true
-  },
-  auto_attach = true,
-  attach_to_untracked = false,
-  current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-  current_line_blame_opts = {
-    virt_text = true,
-    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-    delay = 1000,
-    ignore_whitespace = false,
-    virt_text_priority = 100,
-  },
-  current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+    -- Feline statusline definition.
+    --
+    -- Note: This statusline does not define any colors. Instead the statusline is
+    -- built on custom highlight groups that I define. The colors for these
+    -- highlight groups are pulled from the current colorscheme applied. Check the
+    -- file: `lua/eden/modules/ui/colors.lua` to see how they are defined.
+    require('gitsigns').setup {
+      signs = {
+        add          = { text = '│' },
+        change       = { text = '│' },
+        delete       = { text = '_' },
+        topdelete    = { text = '‾' },
+        changedelete = { text = '~' },
+        untracked    = { text = '┆' },
+      },
+      signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+      numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+      linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+      word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+      watch_gitdir = {
+        follow_files = true
+      },
+      auto_attach = true,
+      attach_to_untracked = false,
+      current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+      current_line_blame_opts = {
+        virt_text = true,
+        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+        delay = 1000,
+        ignore_whitespace = false,
+        virt_text_priority = 100,
+      },
+      current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
   sign_priority = 6,
   update_debounce = 100,
   status_formatter = nil, -- Use default
@@ -580,9 +582,10 @@ require("mini.starter").setup(
 vim.opt.cursorline = true
 vim.opt.termguicolors = true
 vim.opt.winblend = 0
+vim.opt.background = dark
 vim.opt.wildoptions = "pum"
-vim.opt.pumblend = 5
-vim.opt.background = "dark"
+vim.opt.pumblend = 0
+
 
 -- highlight yanked text for 200ms using the "Visual" highlight group
 vim.cmd([[
@@ -595,13 +598,13 @@ vim.cmd("set guifont=Monospace:h20 ")
 require("mason-lspconfig").setup()
 vim.cmd("set number")
 vim.cmd("set noshowmode")
-vim.cmd("set background=dark")
 vim.cmd("set mouse=a")
 vim.cmd("set showmatch")
 vim.cmd("set list")
 vim.cmd("set autoindent")
 vim.cmd("set smartindent")
 vim.cmd("set tabstop=4")
+vim.cmd("set signcolumn=no")
 -- Map a key to run Python files
 vim.api.nvim_set_keymap('n', '<F5>', [[:w<CR>:!python3 %<CR>]], { noremap = true, silent = true })
 
@@ -686,7 +689,7 @@ cmp.setup({
 		fields = { "menu", "abbr", "kind" },
 		format = function(entry, item)
 			local menu_icon = {
-				nvim_lsp = "λ",
+			nvim_lsp = "λ",
 				vsnip = "⋗",
 				buffer = "Ω",
 				path = "🖫",
@@ -721,7 +724,7 @@ local prettier = {
 		),
 	},
 }
-vim.cmd([[colorscheme nord]])
+vim.cmd([[colorscheme deus]])
 local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

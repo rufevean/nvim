@@ -59,12 +59,6 @@ use {
   'nvim-lualine/lualine.nvim',
   requires = { 'nvim-tree/nvim-web-devicons', opt = true }
 }
-use{
-  "folke/tokyonight.nvim",
-  lazy = false,
-  priority = 1000,
-  opts = {},
-}
 use 'tamton-aquib/staline.nvim'
 	use("onsails/lspkind-nvim") -- vscode-like pictograms
 	use("hrsh7th/cmp-buffer") -- nvim-cmp source for buffer words
@@ -85,6 +79,7 @@ use 'tamton-aquib/staline.nvim'
 
   use 'nvim-lua/completion-nvim'
   use 'psliwka/vim-smoothie'
+  use 'pablopunk/sunset.vim'
 	use({
 		"stevearc/conform.nvim",
 		config = function()

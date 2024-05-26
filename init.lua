@@ -614,7 +614,7 @@ vim.cmd("set wrap")
 vim.cmd("set linebreak")
 vim.cmd("set breakindent")
 vim.cmd("set showbreak=↳")
-
+vim.cmd("highlight Normal guibg=#1e2024")
 -- LSP Diagnostics Options Setup
 local sign = function(opts)
 	vim.fn.sign_define(opts.name, {
@@ -724,7 +724,7 @@ local prettier = {
 		),
 	},
 }
-vim.cmd([[colorscheme deus]])
+vim.cmd([[colorscheme sunset]])
 local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {

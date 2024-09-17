@@ -23,6 +23,8 @@ vim.cmd([[
   augroup end
 ]])
 
+-- comment 
+
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
@@ -55,10 +57,16 @@ return packer.startup(function(use)
 	})
 -- If you are using Packer
 use 'shaunsingh/nord.nvim'
+use 'autozimu/LanguageClient-neovim'
 use {
   'nvim-lualine/lualine.nvim',
   requires = { 'nvim-tree/nvim-web-devicons', opt = true }
 }
+use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
+-- These optional plugins should be loaded directly because of a bug in Packer lazy loading
+use 'nvim-tree/nvim-web-devicons' -- OPTIONAL: for file icons
+use 'lewis6991/gitsigns.nvim' -- OPTIONAL: for git status
+use 'romgrk/barbar.nvim'
 use 'tamton-aquib/staline.nvim'
 	use("onsails/lspkind-nvim") -- vscode-like pictograms
 	use("hrsh7th/cmp-buffer") -- nvim-cmp source for buffer words
@@ -80,6 +88,7 @@ use 'tamton-aquib/staline.nvim'
   use 'nvim-lua/completion-nvim'
   use 'psliwka/vim-smoothie'
   use 'pablopunk/sunset.vim'
+  use 'echasnovski/mini.icons'
 	use({
 		"stevearc/conform.nvim",
 		config = function()
@@ -124,6 +133,7 @@ use("onsails/lspkind-nvim")
 	use("rcarriga/nvim-notify")
     
     use('lewis6991/gitsigns.nvim')
+use 'AlexvZyl/nordic.nvim'
 
 	use({
 		"williamboman/mason.nvim",

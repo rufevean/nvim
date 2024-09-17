@@ -83,8 +83,8 @@ local opts = {
 	nowait = true, -- use `nowait` when creating keymaps
 }
 
-local mappings = {
-	["a"] = { "<cmd>Alpha<cr>", "Alpha" },
+local mappings = { 
+["a"] = { "<cmd>Alpha<cr>", "Alpha" },
 	["b"] = {
 		"<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
 		"Buffers",
@@ -190,6 +190,16 @@ local mappings = {
 		h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
 		v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
 	},
+["b"] = {
+        name = "Buffers",
+        b = { "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>", "Buffers" },
+        p = { "<Cmd>BufferPrevious<CR>", "Previous Buffer" },
+        n = { "<Cmd>BufferNext<CR>", "Next Buffer" },
+        c = { "<Cmd>BufferClose<CR>", "Close Buffer" },
+        m = { "<Cmd>BufferMoveNext<CR>", "Move Buffer Right" },
+        M = { "<Cmd>BufferMovePrevious<CR>", "Move Buffer Left" },
+        -- Add more bufferline mappings if needed
+    },
 	-- Telescope
 	["f"] = {
 		"<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
@@ -208,12 +218,10 @@ local mappings = {
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
 	},
+
     ["<Tab>"] = { "<cmd>lua require('telescope').extensions.fzf_commits{}<cr>", "GitHub Copilot" },
     -- adding keybindings for bufferline as alt plus a and alt puls d 
     -- are not working on my machine
-    ["<S-h>"] = { "<cmd>BufferLineCycleNext<cr>", "Next Buffer" },
-    ["<S-;>"] = { "<cmd>BufferLineCyclePrev<cr>", "Prev Buffer" },
 }
-
 which_key.setup(setup)
 which_key.register(mappings, opts)
